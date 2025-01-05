@@ -23,9 +23,28 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper( matrix ) {
+  return matrix.map((row, rowIndex) =>
+    row.map((_, colIndex) => {
+      // Перебираємо сусідні комірки
+      return [
+        [rowIndex - 1, colIndex - 1],
+        [rowIndex - 1, colIndex],
+        [rowIndex - 1, colIndex + 1],
+        [rowIndex, colIndex - 1],
+        [rowIndex, colIndex + 1],
+        [rowIndex + 1, colIndex - 1],
+        [rowIndex + 1, colIndex],
+        [rowIndex + 1, colIndex + 1],
+      ].reduce((count, [i, j]) => {
+        // Перевіряємо чи індекси в межах матриці та чи є міна
+        if (matrix[i] && matrix[i][j]) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+    })
+  );
 }
 
 module.exports = {
